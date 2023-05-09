@@ -1,3 +1,5 @@
+import org.w3c.dom.Node;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -6,39 +8,71 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Choose an Option: 1 to write a note, 2 to find a note and 3 to delete a note...");
+        boolean running = false;
+        while (!running)
+        {
+        System.out.println("Choose an Option: 1 to write a note, 2 to find a note, 3 to delete a note and 4 to close program...");
         Scanner inputScanner = new Scanner(System.in);
         int userInput = inputScanner.nextInt();
-        switch (userInput) {
-            case 1:
-                System.out.println(makeNote());
-                break;
-            case 2:
+        if(userInput == 1)
+        {
+            System.out.println(makeNote());
+        }
 
-                System.out.println(findNote());
-                break;
-            case 3:
-                System.out.println(deleteNote());
-                break;
-            default:
-                System.exit(0);
+        else if (userInput == 2)
+        {
+            System.out.println(findNote());
+        }
+
+        else if (userInput == 3)
+        {
+            System.out.println(deleteNote());
+        }
+
+       else if (userInput == 4)
+        {
+            running=true;
+        }
+        else{
+            System.out.println("you have to choose option 1,2 or 3");
+        }
         }
 
     }
 
     public static String makeNote() {
-        System.out.println("Write a Note:");
-        Scanner scanner = new Scanner(System.in);
-        String lineIn = scanner.nextLine();
-        try {
-            FileWriter fileWriter = new FileWriter("Memo.txt", true);
-            fileWriter.append(lineIn).append("\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        boolean yn;
+        String text;
 
-        scanner.close();
+            System.out.println("Write a Note:");
+            Scanner scanner = new Scanner(System.in);
+            String lineIn = scanner.nextLine();
+            try {
+                FileWriter fileWriter = new FileWriter("Memo.txt", true);
+                fileWriter.append(lineIn).append("\n");
+                fileWriter.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Vill du skriva en till NOTE? SVARA yes/no ");
+            Scanner sc = new Scanner(System.in);
+            text = sc.nextLine();
+            switch (text) {
+                case "yes":
+                    yn = false;
+                    System.out.println(makeNote());
+                    break;
+                case "no":
+                    yn = true;
+                    System.out.println("Dessa är dina notes!");
+                    break;
+                default:
+                    System.out.println("please enter again ");
+
+            }
+
         return lineIn;
     }
 
@@ -59,6 +93,8 @@ public class Main {
         }
         return "Note not found!";
     }
+
+
 
     public static String deleteNote() {
         System.out.println("Write a word from a note to delete");
@@ -96,4 +132,8 @@ public class Main {
         }
         return "Note not deleted";
     }
+
+
+
+
 }
